@@ -13,7 +13,7 @@ We will receive an object in the "content" prop, which may look like:
 const ToDo = props => {
     return (
         // Display one of the user's to-do strings as the content of the div
-        <div className="todo">{props.content.id} {props.content.text}</div>
+        <div className="todo">{props.content.text}</div>
     );
 }
 

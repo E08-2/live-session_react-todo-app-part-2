@@ -15,3 +15,8 @@ button {
     padding: 10px;
     border: 1px solid;
 }
+
+.delete {
+    padding-left: 10px;
+    cursor: pointer;
+}

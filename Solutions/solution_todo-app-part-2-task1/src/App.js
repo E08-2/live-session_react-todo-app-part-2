@@ -1,23 +1,31 @@
 import React, { useState } from "react";
 import Button from "./components/Button";
 import ToDoList from "./components/ToDoList";
+import DoneList from "./components/DoneList";
 import "./App.css";
 
 const App = () => {
+    // State variable to track the current id
     const [ currentId, setCurrentId ] = useState(1);
-    // Create a state variable to store the to-do strings the user has already created
+    // State variable to store the to-do objects the user has already created
     const [ toDos, setToDos ] = useState([]);
-    // Create another state variable to track what the user types in the input before they click the button to make a new to-do string
+    // State variable to track what the user types in the input before they click the button
     const [ currentToDo, setCurrentToDo ] = useState({text: "", id: currentId});
-    
+    // State variable to store completed "todo" items
+    const [ doneItems, setDoneItems ] = useState([
+        { text: "Something I did last week", id: 1 },
+        { text: "Something I did yesterday", id: 2 },
+        { text: "Something I did this morning", id: 3 }
+    ]); 
+
     // A function to update the currentToDo variable every time something changes inside the input
     const updateCurrentToDo = event => {
         setCurrentToDo({text: event.target.value, id: currentId});
     }
 
-    // Create a new to-do string and add it to the UI when the button is clicked
+    // Create a new to-do object and add it to the UI when the button is clicked...
     const addNewToDo = () => {
-        // Make sure the user has typed something before creating a new to-do string
+        // Make sure the user has typed something before creating a new to-do object
         if (currentToDo.text.length > 0) {
             // Option 1: Spread operator
             setToDos([...toDos, currentToDo]);
@@ -25,10 +33,10 @@ const App = () => {
             // Option 2: Concat
             // ? setToDos(toDos.concat(currentToDo));
 
-            // Add 1 to currentId 
+            // Add 1 to "currentId" state variable 
             setCurrentId(currentId + 1);
 
-            // Then reset the value of the "currentToDo" state variable to an empty string, ready for the user to type a new to-do string
+            // Then reset the value of the "currentToDo" state variable (including the new "currentId" value)
             setCurrentToDo({text: "", id: currentId});
         } else {
             alert("Please type something before trying to create a new to-do!");
@@ -41,13 +49,18 @@ const App = () => {
             {/* Note: this input's value is controlled by state! */}
             <input onChange={updateCurrentToDo} value={currentToDo.text} placeholder="Add a new To-Do!" />
 
-            {/* Click the button to add a new to-do string to the "toDos" array */}
+            {/* Click the button to add a new to-do object to the "toDos" array */}
             <Button updateToDos={addNewToDo} />
 
             <h2>TO-DO</h2>
 
-            {/* Render each of the user's current to-do strings in JSX inside the <NodeList /> component */}
+            {/* Render each of the user's current to-do items in JSX inside the <ToDoList /> component */}
             <ToDoList data={toDos} />
+
+            <h2>DONE</h2>
+
+            {/* Render all the to-do items the user has completed */}
+            <DoneList data={doneItems} />
         </>
     );
 }
